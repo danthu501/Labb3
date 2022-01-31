@@ -36,21 +36,6 @@ namespace Labb3
 
                     case 1:
                         Console.WriteLine("Hämtar ut alla elver");
-
-                        List<Elev> Test = new List<Elev>();
-
-                        foreach (var item in context.Elev)
-                        {
-                            var Elever = new Elev()
-                            {
-                                Personnummer = item.Personnummer,
-                                FörNamn = item.FörNamn,
-                                EfterNamn = item.EfterNamn,
-                                Klass = item.Klass
-                            };
-                            Test.Add(Elever);
-                        }
-
                         Console.WriteLine();
                         Console.WriteLine("[1] Sortera alla elver i bokstavsordning efter förnamn, från a till ö.");
                         Console.WriteLine("[2] Sortera Alla elver från ö till a efter förnamn");
@@ -63,39 +48,46 @@ namespace Labb3
                         {
                             case 1:
 
-                                //Stolen from Aarkan1
-                                Test.Sort((x, y) => x == null ? 1 : y == null ? -1 : x.FörNamn.CompareTo(y.FörNamn));
-                                //
-                                foreach (var item in Test)
+                                var Sort = from Elev in context.Elev
+                                          orderby Elev.FörNamn 
+                                          select Elev;
+
+                                foreach (var item in Sort)
                                 {
-                                    Console.WriteLine(item.FörNamn + " " + item.EfterNamn);
+                                    Console.WriteLine(item.FörNamn+" "+item.EfterNamn);
                                 }
 
                                 break;
                             case 2:
-                                //Stolen from Aarkan1 but alterd so it order by rising insted of falling order.
-                                Test.Sort((x, y) => x == null ? 1 : y == null ?-1 : y.FörNamn.CompareTo(x.FörNamn));
-                                foreach (var item in Test)
+                                var SortFND = from Elev in context.Elev
+                                           orderby Elev.FörNamn descending
+                                           select Elev;
+
+                                foreach (var item in SortFND)
                                 {
                                     Console.WriteLine(item.FörNamn + " " + item.EfterNamn);
                                 }
 
                                 break;
+
                             case 3:
-                                //Stolen from Aarkan1
-                                Test.Sort((x, y) => x == null ? 1 : y == null ? -1 : x.EfterNamn.CompareTo(y.EfterNamn));
-                                //
-                                foreach (var item in Test)
+                                var SortEN = from Elev in context.Elev
+                                           orderby Elev.EfterNamn
+                                             select Elev;
+
+                                foreach (var item in SortEN)
                                 {
                                     Console.WriteLine(item.FörNamn + " " + item.EfterNamn);
                                 }
-                               
+
                                 break;
+                            
                             case 4:
-                                //Stolen from Aarkan1 but alterd so it order by rising insted of falling order.
-                                Test.Sort((x, y) => x == null ? 1 : y == null ? -1 : y.EfterNamn.CompareTo(x.EfterNamn));
-                                //
-                                foreach (var item in Test)
+                                var SortEND = from Elev in context.Elev
+                                              orderby Elev.EfterNamn descending
+                                              select Elev;
+
+                                foreach (var item in SortEND)
                                 {
                                     Console.WriteLine(item.FörNamn + " " + item.EfterNamn);
                                 }
