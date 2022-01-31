@@ -1,6 +1,8 @@
 ﻿using Labb3.Models;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace Labb3
@@ -23,6 +25,7 @@ namespace Labb3
             Console.WriteLine("[1] Hämta ut alla elver");
             Console.WriteLine("[2] Hämta ut alla elver i en viss klass");
             Console.WriteLine("[3] Lägg till ny personal");
+            Console.WriteLine("[4] Hämta ut all personal");
           
             int UserInput;
             Int32.TryParse(Console.ReadLine(), out UserInput);
@@ -62,6 +65,7 @@ namespace Labb3
 
                                 //Stolen from Aarkan1
                                 Test.Sort((x, y) => x == null ? 1 : y == null ? -1 : x.FörNamn.CompareTo(y.FörNamn));
+                                //
                                 foreach (var item in Test)
                                 {
                                     Console.WriteLine(item.FörNamn + " " + item.EfterNamn);
@@ -80,6 +84,7 @@ namespace Labb3
                             case 3:
                                 //Stolen from Aarkan1
                                 Test.Sort((x, y) => x == null ? 1 : y == null ? -1 : x.EfterNamn.CompareTo(y.EfterNamn));
+                                //
                                 foreach (var item in Test)
                                 {
                                     Console.WriteLine(item.FörNamn + " " + item.EfterNamn);
@@ -89,6 +94,7 @@ namespace Labb3
                             case 4:
                                 //Stolen from Aarkan1 but alterd so it order by rising insted of falling order.
                                 Test.Sort((x, y) => x == null ? 1 : y == null ? -1 : y.EfterNamn.CompareTo(x.EfterNamn));
+                                //
                                 foreach (var item in Test)
                                 {
                                     Console.WriteLine(item.FörNamn + " " + item.EfterNamn);
@@ -136,8 +142,25 @@ namespace Labb3
                         context.SaveChanges();
                         break;
 
+
+                    case 4:
+                        SqlConnection sqlCon1 = new SqlConnection(@"Data Source = DESKTOP-6TSF82P; Initial Catalog = Labb2E; Integrated Security = True");
+                        SqlDataAdapter sqlda = new SqlDataAdapter(@"Select * from Anställda", sqlCon1);
+                        DataTable dtbl = new DataTable();
+                        sqlda.Fill(dtbl);
+
+                        foreach (DataRow r in dtbl.Rows)
+                        {
+                            Console.Write(r["FörNamn"]+" ");
+                            Console.Write(r["EfterNamn"]+" ");
+                            Console.Write(r["Befattning"]);
+                            Console.WriteLine();
+                        }
+                        Console.ReadKey();
+
+                        break;
                     default:
-                        Console.WriteLine("Var god ange en siffra mellan 1 och 3");
+                        Console.WriteLine("Var god ange en siffra mellan 1 och 4");
                         break;
 
                 }
