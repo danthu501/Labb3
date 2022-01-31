@@ -34,7 +34,6 @@ namespace Labb3
                     case 1:
                         Console.WriteLine("Hämtar ut alla elver");
 
-                    https://www.dotnetperls.com/sort
                         List<Elev> Test = new List<Elev>();
 
                         foreach (var item in context.Elev)
