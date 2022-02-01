@@ -16,7 +16,6 @@ namespace Labb3
 
             while (menybool)
             {
-
             
             Console.WriteLine("Hej Välkommen till Skolans system");
             Console.WriteLine();
