@@ -112,6 +112,7 @@ namespace Labb3
                             }
 
                         }
+                        Console.ReadKey();
                         
                         break;
                        
